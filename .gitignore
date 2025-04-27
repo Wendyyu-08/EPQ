@@ -1,6 +1,7 @@
 # Local working files
 *.ipynb
 *.ipynb_checkpoints
+*sdmx*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
