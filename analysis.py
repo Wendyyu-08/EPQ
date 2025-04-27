@@ -1,11 +1,42 @@
 import pandas as pd
 import json as j
-from datetime import datetime
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta as rd
 
-from constants import PATH_CLEAN
+def check_missing_countries(df=None, MAP_ISO3=None):
+    missing_countries = set(df['country']) - set(MAP_ISO3.keys())
+    if missing_countries:
+        print("Error: The following countries are missing from MAP_ISO3:")
+        for country in sorted(missing_countries):
+            print(f"- {country}")
+        raise ValueError("Missing country mappings found")
 
 
-# TODO push code for pivotal 1 with non-corrupted CRM file
+# Generates main exporters of critical raw materials
+def make_pivotal1():
+    from dep.hs_list import CRM
+    CRM = list(set(CRM))
+
+    df = pd.DataFrame()
+
+    for year in range(1995,2024):
+        print(f'Processing {year}')
+        tf = pd.read_parquet(f'data/baci/clean/baci_{year}.parquet')
+        tf.hs = tf.hs.astype(str).str.zfill(6)
+        tf = tf[tf.hs.isin(CRM)][['from','hs','value']].groupby(['from','hs']).sum().reset_index()
+        tf = tf.pivot(index='from',columns='hs',values='value').fillna(0)
+        for c in tf.columns: tf[c] = tf[c]/tf[c].max() * 100
+        tf['pivotal1'] = tf.mean(axis=1).round(3)
+        COLS = list(tf.columns)
+        tf = tf.reset_index().assign(year=year)
+        tf = tf[['year','from'] + COLS].rename(columns={'from':'country'})
+        
+        if len(df) > 0:
+            df = pd.concat([df,tf],axis=0,ignore_index=True)
+        else:
+            df = tf.copy()
+
+    df.to_parquet('output/pivotal1.parquet',index=False,compression='brotli')
 
 
 # Generates value-added by Sector X in Country Y, to the rest of the world
@@ -14,7 +45,7 @@ def make_pivotal2():
 
     for year in range(1995,2021):
         print(f'Processing {year}')
-        df = pd.read_parquet(f'{PATH_CLEAN}icio_{year}.parquet')
+        df = pd.read_parquet(f'data/icio/clean/icio_{year}.parquet')
         df = df[df.input_country != df.output_country]
         df = df[~df.input_country.isin(['TLS','VA','Z','X','OUT'])]
         df = df[~df.output_sector.isin(['HFCE', 'NPISH','GGFC', 'GFCF', 'INVNT', 'DPABR', 'ALL'])] # excluding consumption angle
@@ -42,7 +73,7 @@ def make_pivotal3():
 
     for year in range(1995,2021):
         print(f'Processing {year}')
-        df = pd.read_parquet(f'{PATH_CLEAN}icio_{year}.parquet')
+        df = pd.read_parquet(f'data/icio/clean/icio_{year}.parquet')
         df = df[df.input_country != df.output_country]
         df = df[~df.input_country.isin(['TLS','VA','Z','X','OUT'])]
 
@@ -65,31 +96,68 @@ def make_pivotal3():
     print(f'Wrote pivotal3.parquet: {len(rf):,.0f} rows')
 
 
-# Generates number of maritime and air connections by country
+# Generates number of maritime, air and land connections by country
 def make_pivotal4():
+    MAP_COUNTRY_FIX = {
+        'British Virgin Islands': 'Virgin Islands (British)',
+        'China, Hong Kong SAR': 'Hong Kong SAR',
+        'China, Taiwan Province of': 'Taiwan ROC',
+        'Cote d\'Ivoire': 'Côte d\'Ivoire',
+        'Curacao': 'Curaçao',
+        'Dem. People\'s Rep. of Korea': 'North Korea',
+        'Dem. Rep. of the Congo': 'Congo, Democratic Republic of the',
+        'Iran (Islamic Republic of)': 'Iran, Islamic Republic of',
+        'Micronesia (Federated States of)': 'Micronesia, Federated States of',
+        'Netherlands (Kingdom of the)': 'Netherlands',
+        'Netherlands Antilles': 'Bonaire, Sint Eustatius and Saba',
+        'Republic of Korea': 'South Korea',
+        'Republic of Moldova': 'Moldova, Republic of',
+        'Reunion': 'Réunion',
+        'Russian Federation': 'Russia',
+        'Saint Helena': 'Saint Helena, Ascension and Tristan da Cunha',
+        'Serbia and Montenegro': 'Serbia',
+        'Sudan (...2011)': 'Sudan',
+        'Turkiye': 'Türkiye',
+        'United Republic of Tanzania': 'Tanzania, United Republic of',
+        'United States Virgin Islands': 'Virgin Islands (U.S.)',
+        'Venezuela (Bolivarian Rep. of)': 'Venezuela, Bolivarian Republic of',
+        'Wallis and Futuna Islands': 'Wallis and Futuna',
+    }
+
     cf = pd.read_csv('dep/country_iso.csv')
-    MAP_ISO3 = dict(zip(cf['country'],cf['iso3']))
+    MAP_NAME_ISO3 = dict(zip(cf['country'],cf['iso3']))
+    MAP_ISO2_ISO3 = dict(zip(cf['iso2'],cf['iso3']))
 
-    df = pd.read_excel('/Users/theveshtheva/Downloads/data/raw/lpi_maritime.xlsx',usecols='A,D')
-    df.columns = ['country','connections_maritime']
-    df.connections_maritime = df.connections_maritime.astype(int)
-    df.country = df.country.map(MAP_ISO3)
+    df = pd.read_csv('data/lsci.csv')
+    df.columns = ['country'] + [date(2006,1,1) + rd(months=i*3) for i in range(len(df.columns)-1)]
+    df.country = df.country.map(MAP_COUNTRY_FIX).fillna(df.country)
+    check_missing_countries(df, MAP_NAME_ISO3)
+    df.country = df.country.map(MAP_NAME_ISO3)
+    df = pd.melt(df,id_vars=['country'],value_vars=list(df.columns[1:]),var_name='year',value_name='maritime')
+    df.year = pd.to_datetime(df.year).dt.year
+    df = df.groupby(['country','year']).mean(numeric_only=True).reset_index()
+    df = df[df.year < 2024].pivot(index='country',columns='year',values='maritime').reset_index()
+    for c in df.columns[1:]:
+        df[c] = df[c].fillna(0) / df[c].max() * 100
+    df = pd.melt(df,id_vars='country',value_vars=list(df.columns[1:]),var_name='year',value_name='maritime')
 
-    tf = pd.read_excel('/Users/theveshtheva/Downloads/data/raw/lpi_aviation.xlsx',usecols='A,B')
-    tf.columns = ['country','connections_air']
-    tf.connections_air = tf.connections_air.astype(int)
-    tf.country = tf.country.map(MAP_ISO3)
+    tf = pd.read_excel('data/lpi_aviation.xlsx',usecols='A,B')
+    tf.columns = ['country','air']
+    check_missing_countries(tf, MAP_NAME_ISO3)
+    tf.country = tf.country.map(MAP_NAME_ISO3)
+    df = pd.merge(df,tf,on='country',how='left')
+    df.air = df.air.fillna(0).astype(int)
 
-    df = pd.merge(tf,df,on='country',how='outer')
-    # df['country_name'] = df['country'].map({v: k for k, v in MAP_ISO3.items()})
-    for c in ['connections_air','connections_maritime']:
-        df[c] = df[c].fillna(0).astype(int)
-    df = pd.melt(df,id_vars=['country'],value_vars=['connections_air','connections_maritime'],var_name='mode',value_name='connections')
-    df['mode'] = df['mode'].map({'connections_air':'air','connections_maritime':'maritime'})
-    df = df[['country','mode','connections']]
+    tf = pd.read_csv('data/land_borders.csv',usecols=['flagCode','DistinctLandNeighbors'])
+    tf.columns = ['country','land']
+    check_missing_countries(tf, MAP_ISO2_ISO3)
+    tf.country = tf.country.map(MAP_ISO2_ISO3)
+    df = pd.merge(df,tf,on='country',how='left')
+    df.land = df.land.fillna(0).astype(int)
+    for c in ['air','land']:
+        df[c] = df[c] / df[c].max() * 100
+    df['pivotal4'] = 0.8* df.maritime + 0.18* df.air + 0.02* df.land
     df.to_parquet('output/pivotal4.parquet',index=False,compression='brotli')
-
-    # TODO: Add land connections = number of land borders
 
 
 # Generates number of data centres and submarine cable landings by country
@@ -104,25 +172,23 @@ def make_pivotal5():
         'Dem. Rep.': 'Congo, Democratic Republic of the',
         'Iran': 'Iran, Islamic Republic of',
         'Micronesia': 'Micronesia, Federated States of',
-        'Netherlands': 'Netherlands, Kingdom of the',
+        'Netherlands': 'Netherlands',
         'Rep.': 'Congo',
-        'Russia': 'Russian Federation',
         'Saint Martin': 'Saint Martin (French part)',
         'Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba',
         'Sint Maarten': 'Sint Maarten (Dutch part)',
-        'South Korea': 'Korea, Republic of',
         'Syria': 'Syrian Arab Republic',
-        'Taiwan': 'Taiwan, Province of China',
+        'Taiwan': 'Taiwan ROC',
         'Tanzania': 'Tanzania, United Republic of',
         'Turkey': 'Türkiye',
-        'United Kingdom': 'United Kingdom of Great Britain and Northern Ireland',
-        'United States': 'United States of America',
+        'United Kingdom': 'United Kingdom',
+        'United States': 'United States',
         'Venezuela': 'Venezuela, Bolivarian Republic of',
         'Vietnam': 'Viet Nam',
         'Virgin Islands (U.K.)': 'Virgin Islands (British)'
     }
 
-    data = j.load(open('/Users/theveshtheva/Downloads/data/raw/cable_landings.json'))['features']
+    data = j.load(open('data/cable_landings.json'))['features']
     df = pd.DataFrame(data)
     df['location'] = df['properties'].apply(lambda x: x['name'])
     df = df.drop(['type','properties','geometry'], axis=1)
@@ -130,9 +196,10 @@ def make_pivotal5():
     df.country = df.country.astype(str).str.strip()
     df.country = df.country.map(MAP_COUNTRY_FIX).fillna(df.country)
     df = df.assign(landings=1).groupby(['country']).sum(numeric_only=True).reset_index()
+    check_missing_countries(df, MAP_ISO3)
     df.country = df.country.map(MAP_ISO3)
 
-    tf = pd.read_csv('/Users/theveshtheva/Downloads/data/raw/data_centres.csv',usecols=['iso3','data_centres'])\
+    tf = pd.read_csv('data/data_centres.csv',usecols=['iso3','data_centres'])\
     .rename(columns={'iso3':'country','data_centres':'data_centres'})
 
     df = pd.merge(df,tf,on='country',how='left')
@@ -151,7 +218,7 @@ def make_pivotal6():
     for y in [1992,1995,1998,2001,2004,2007,2010,2013,2016,2019,2022]:
         COLS += [f'value_{y}',f'proportion_{y}']
 
-    df = pd.read_excel('/users/theveshtheva/Downloads/data/raw/bis_compiled.xlsx')
+    df = pd.read_excel('data/bis_compiled.xlsx')
     df.currency = df.currency.map(MAP_CUR_ISO3)
     df.columns = COLS
     df = pd.melt(df,id_vars=['country'],value_vars=COLS[1:],var_name='measure',value_name='value')
@@ -174,6 +241,9 @@ def make_pivotal6():
 if __name__ == '__main__':
     START = datetime.now()
     print(f'\nStart: {START:%Y-%m-%d %H:%M:%S}\n')
+    print('')
+    make_pivotal1()
+    print('')
     make_pivotal2()
     print('')
     make_pivotal3()
@@ -184,4 +254,4 @@ if __name__ == '__main__':
     print('')
     make_pivotal6()
     print(f'\nEnd: {datetime.now():%Y-%m-%d %H:%M:%S}')
-    print(f'\nRuntime: {datetime.now() - START:%H:%M:%S}\n')
+    print(f'\nRuntime: {datetime.now() - START}\n')

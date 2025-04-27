@@ -1,7 +1,24 @@
 # Local working files
+data*
 *.ipynb
 *.ipynb_checkpoints
 *sdmx*
+
+# LaTeX compilation junk
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.bcf
+*.run.xml
+*.vscode
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
