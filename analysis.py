@@ -5,6 +5,9 @@ from datetime import datetime
 from constants import PATH_CLEAN
 
 
+# TODO push code for pivotal 1 with non-corrupted CRM file
+
+
 # Generates value-added by Sector X in Country Y, to the rest of the world
 def make_pivotal2():
     rf = pd.DataFrame(columns=['year','country','sector','value'])
@@ -85,6 +88,8 @@ def make_pivotal4():
     df['mode'] = df['mode'].map({'connections_air':'air','connections_maritime':'maritime'})
     df = df[['country','mode','connections']]
     df.to_parquet('output/pivotal4.parquet',index=False,compression='brotli')
+
+    # TODO: Add land connections = number of land borders
 
 
 # Generates number of data centres and submarine cable landings by country
