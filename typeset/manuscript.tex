@@ -110,7 +110,9 @@
 \begin{document}
 \pagenumbering{gobble}
 
-\phantom{Wendy Yu}
+Learner Name: Yui Lam Yu \\
+Learner Number: 2401 \\
+Centre Name: Merchiston International School
 
 \vfill
 
@@ -120,7 +122,7 @@
 \LARGE
 Centres of Attention: Which Countries are the Most Pivotal in Global Supply Chains? \\[0.21in]
 \end{center}
-\large This paper develops a novel Pivotal-ness Index to identify and rank countries’ strategic importance in global supply chains across six key dimensions: raw materials, production, consumption, geographic position, digital infrastructure, and future potential. Using computational and econometric methods on granular datasets, I evaluate countries’ roles in supply networks. My findings reveal the complex interdependencies between nations and highlight emerging shifts in supply chain dominance. The results have important implications for understanding geopolitical tensions, economic development patterns, and international trade relationships. This research provides valuable insights for policymakers and businesses in developing strategies to managing critical dependencies.
+\large This paper develops a novel Pivotalness Index to identify and rank countries’ strategic importance in global supply chains across six key dimensions: raw materials, production, consumption, geographic position, digital and financial infrastructures. Using computational and econometric methods on granular datasets, I evaluate the roles of countries in supply networks. My findings reveal the complex interdependencies between nations, as well as emerging shifts in supply chain configurations and country dominance.  The overall index and subindexes have significant implications for understanding geopolitical tensions, supply chain resilience, and international trade relationships, particularly in the current global economic landscape. This research, therefore, provides valuable insights for policymakers and firms in developing strategies for managing critical dependencies.
 	\end{minipage}
 \end{center}
 
@@ -128,7 +130,7 @@ Centres of Attention: Which Countries are the Most Pivotal in Global Supply Chai
 \vfill
 
 Word Count: 6000 words, including 100-word abstract and 7 figures\\
-\phantom{Word Count: 6000 words,} excluding 1 appendix
+\phantom{Word Count: 6000 words,}
 
 \newpage
 \pagenumbering{arabic}
@@ -136,11 +138,11 @@ Word Count: 6000 words, including 100-word abstract and 7 figures\\
 \section{Motivation}
 \label{sec:motivation}
 
-The Bretton Woods conference kicked off an era of globalisation, with countries---almost without exception---becoming more embedded and more reliant on the system of global supply chains which has propelled living standards forward. However, events like the COVID-19 pandemic, Russo-Ukrainian war, and Suez Canal blockage have exposed an underlying fragility to external shocks; supply chains struggled to respond during all 3 events, thus revealing the risk of relying on supply configurations which have no real alternative.
+The Bretton Woods conference kicked off an era of globalisation, with countries---almost without exception---becoming more embedded and more reliant on the system of global supply chains, which has propelled living standards forward. However, events like the COVID-19 pandemic, the Russo-Ukrainian war, and the Suez Canal blockage have exposed an underlying fragility to external shocks. Supply chains struggled to respond during all three events, thus revealing the risk of relying on supply configurations that have no real alternative.
 
 In response, firms and governments have introduced measures to bolster supply chain resilience and protect critical sectors essential for strategic development. Initiatives like the EU Raw Materials Alliance and the US Chips Act aim to secure key industries such as semiconductors, batteries, and pharmaceuticals. Similarly, China’s dual circulation strategy and the Belt and Road Initiative seek to diversify trade routes and mitigate exposure to external shocks.
 
-Accordingly, I am interested in understanding and quantifying the notion of criticality to global supply chains, or what I term as `pivotalness'. It would be highly beneficial to have a robust method of identifying systemic vulnerabilities and dominance structures, with broader implications for policymaking, trade negotiations, and geopolitical stability.
+Accordingly, I am interested in understanding and quantifying the notion of criticality to global supply chains, or what I term as 'pivotalness'. It would be highly beneficial to have a robust method of identifying systemic vulnerabilities and dominance structures, with broader implications for policymaking, trade negotiations, and geopolitical stability.
 
 The rest of this paper proceeds as follows. Section \ref{sec:litreview} reviews the relevant literature and situates my research within it. Section \ref{sec:theory} presents the theoretical framework. Section \ref{sec:empirics} outlines the empirical strategy and findings. Section \ref{sec:evaluation} evaluates the robustness of the findings. Section \ref{sec:conclusion} concludes and suggests avenues for future work.
 
@@ -163,15 +165,15 @@ Despite the rich literature, many studies focus on short timeframes, specific in
 
 In general, I define \textbf{pivotal} in the following context: A country that is deemed \textbf{pivotal} is the one that plays a central role in ensuring the smooth functioning, efficiency, and resilience of the entire supply chain, where its role has short-term irreplaceability. 
 
-\highlight{Pivotal Type 1: Raw Materials}{If this country does not extract raw materials, there will be a significant impact on the industries that use those raw materials.}
+\highlight{Pivotal Type 1: Raw Materials}{A country is pivotal for raw materials if its extractive capacity is a significant contributor to industries that use those raw materials.}
 
 The extraction of raw materials is the initial stage of the supply chain and the inputs for later production. Instead of looking at plant-based or animal-based raw materials, this essay will focus on mining-based materials (e.g., iron ore, cobalt, and fossil fuels) that are used for industrial inputs and are of greater economic significance compared to the other two categories. In particular, the government has been increasingly concerned about critical raw materials (CRM). They are materials used in sectors with high economic (e.g., technology) or strategic importance (e.g., national defence, space and technology) and are exposed or will be exposed to high supply risks \citep{european2023}. The CRM lists vary among countries due to differences in development and industrial structure. However, lists from major trading nations show that there are many overlaps. This could be attributed to the green energy transitions and escalating geopolitical tensions, where policymakers started prioritising the security of CRM supply to guarantee a sustainable supply chain \citep{kowalski2023}.
  
 CRMs are classified with complicated and differential methods based on different contexts of countries, but common aspects include material scarcity, economic and geopolitical importance, supply or production risks, substitutability, geographic concentration, etc \citep{mancini2016}. However, the pivotalness concept did not intend to capture material scarcity as part of the criticality measure, as industrial changes may reduce a CRM’s criticality in the longer run. Despite this, many materials used in the renewable energy sector will remain important in the future due to the industry's essentiality \citep{kowalski2023}. Therefore, countries that were major exporters of these CRM are clearly pivotal to the supply chain.  
 
-\highlight{Pivotal Type 2: Production}{If this country does not perform its manufacturing function, there will be a significant impact both upstream and downstream.}
+\highlight{Pivotal Type 2: Production}{A country is a pivotal producer if its manufacturing functions - if not performed - will cause significant impact both upstream and downstream.}
 
-Given the rise in geopolitical tensions and the US-China trade war, supply chain reconfiguration is underway, with moves toward friend-shoring, back-shoring, and near-shoring. However, this indirectly reinforced the presence of manufacturing hubs like China, which remain dominant and only partially substitutable, due to complex supply chain interdependencies \citep{alfaro2023}. In the short run, shifting away from existing hubs is challenging and involves a great efficiency trade-off for major importing countries, which tackles our concept of ‘pivotalness’. Studies from \citet{scheibe2018} directly apply to intermediate manufacturing as well as the pivotal types 1 and 3 — any disruption at any stage could propagate throughout the entire supply chain due to feedback loops, tight coupling, and interdependencies. This is supported by the recent COVID-19 lockdowns in Chinese factories \citep{lafrogne2022}.
+Given the rise in geopolitical tensions and the US-China trade war, supply chain reconfiguration is underway, with moves toward friendshoring, backshoring, and nearshoring. However, this indirectly reinforced the presence of manufacturing hubs like China, which remain dominant and only partially substitutable, due to complex supply chain interdependencies \citep{alfaro2023}. In the short run, shifting away from existing hubs is challenging and involves a great efficiency trade-off for major importing countries, which tackles our concept of ‘pivotalness’. Studies from \citet{scheibe2018} directly apply to intermediate manufacturing as well as the pivotal types 1 and 3 — any disruption at any stage could propagate throughout the entire supply chain due to feedback loops, tight coupling, and interdependencies. This is supported by the recent COVID-19 lockdowns in Chinese factories \citep{lafrogne2022}.
 
 The interdependencies of the supply chain require an examination of intermediate goods, which are inputs used in the production of final goods and services. In general, developing nations tend to take a larger share of intermediate goods exports due to primarily lower labour costs \citep{lazard2023supplychains}, while developed nations skew less. In order to study the pivotalness of different countries from this ‘input good’ perspective, a theoretical approach which accounts for the aforementioned supply chain interdependencies is required. The best current method for doing so is via the use of input-output tables \citep{leontief1951}, which allow us to trace the entire global supply chain leading to the purchase of a final good or service. Given its proven record of robustness in studying supply chains, it is a good theoretical choice to underpin my empirical strategy.
 
@@ -182,13 +184,13 @@ The framework here is very similar to Pivotal Type 2 (production), except that i
 Similar to pivotal type 2, input-output tables are the most theoretically robust way to capture these interlinkages; for parsimony, I will not repeat the justification.
 
 
-\highlight{Pivotal Type 4: Geographic}{If something goes wrong in this country, physical trade pathways will be heavily affected.}
+\highlight{Pivotal Type 4: Geographic}{A country is geographically pivotal if - upon a physical incident in or around the country - trade pathways are heavily affected.}
 
 Trade heavily depends on physical logistics to ensure the efficiency in transporting raw materials, intermediate goods and final products across countries. According to \citet{unctad2023}, over 80\% of traded goods by volume to transported via seaborne trade. Therefore, Pivotal Type 4 must study the notion of ‘connections’, defined as a country’s integration into and accessibility within the global trade logistics networks by sea, air, and land. This notion is theoretically underpinned by transport geography \citep{rodrigue2012,hesse2020} and the Global Production Networks (GPN) framework (Coe and Yeung, 2015), which emphasise that well-connected logistic hubs serve as critical nodes that enable the smooth flow of trade. Connections are not only crucial for the physical flow of goods but also for overall supply chain resilience. Empirical research shows that countries with strong logistical linkages are more capable of responding to shocks, rerouting flow and maintaining supply chain continuity (Baldwin et al., 2023). 
 
 Recent events such as the Suez Canal blockage (2021), the Red Sea crisis (2024), and the Baltimore Bridge Collapse (2024) highlight the presence of logistical chokepoints, maritime routes and critical infrastructure, where their disruption causes delays and drops in global trade volume \citep{unctad2024}. Overall, disruptions in pivotal logistical hubs would lead to widespread inefficiencies across the entire supply chain, given their short-term irreplaceability and vulnerabilities to external shocks \citep{baldwin2023}.
 
-\highlight{Pivotal Type 5: Digital}{If something goes wrong with this country’s digital infrastructure, global online activity will be significantly impacted.}
+\highlight{Pivotal Type 5: Digital}{A country is digitally pivotal if its digital infrastructure are central to global online activity.}
 
 Today, modern supply chains are largely incorporating digital technologies (e.g., AI, IoT, and blockchain) to improve efficiency and adaptability by operating functions such as demand forecasting and logistics streamlining. Although digitalisation in supply chains is driven primarily by technological advancements, it has become increasingly important in recent, volatile economic contexts. Firms are increasingly reliant on digital platforms to operate their supply chains, as they enable quick responses, such as re-routing trucking and shipping during chokepoint closures, to disruptions or changes in market conditions. Given the importance of digital technologies, it suggests the criticality of their underlying infrastructure. 
  
@@ -249,9 +251,9 @@ For each country, I sum the value-added embedded in exported intermediate goods 
 
 The results reveal the overwhelming dominance of China as a midstream production hub. In 2020, China scores the maximum pivotalness value of 100.0, reflecting its extraordinary role in supplying intermediate goods to global supply chains. Germany (57.5), the United States (41.2), and Japan (35.0) follow at a significant distance. China's position stems from its concentration in key sectors such as electronics (semiconductors, circuit boards), machinery components, textiles, and light industrial manufacturing, confirming its status as the world's most entrenched midstream economy.
 
-Germany ranks second with a diversified industrial base spanning automotive parts, advanced machinery, and chemical intermediates. Although its relative pivotalness has declined slightly over the period, Germany remains a critical supplier to European and global manufacturing networks. The United States maintains high pivotalness through sectors such as aerospace, high-technology machinery, and advanced electronics, although its share of broader intermediate manufacturing exports has steadily eroded over time. Emerging economies, notably Vietnam and Mexico, show upward trends in pivotalness, supported by global diversification efforts such as friendshoring and nearshoring. However, their absolute pivotalness scores remain modest compared to the entrenched dominance of China and Germany. Taiwan ROC, despite its relatively small size, features strongly due to its outsized role in semiconductor fabrication—a sector whose strategic importance has become increasingly evident post-pandemic.
+Germany ranks second with a diversified industrial base spanning automotive parts, advanced machinery, and chemical intermediates. Although its relative pivotalness has declined slightly over the period, Germany remains a critical supplier to European and global manufacturing networks. The United States maintains high pivotalness through sectors such as aerospace, high-technology machinery, and advanced electronics, although its share of broader intermediate manufacturing exports has steadily eroded over time. Emerging economies, notably Vietnam and Mexico, show upward trends in pivotalness, supported by global diversification efforts such as friendshoring and nearshoring. However, their absolute pivotalness scores remain modest compared to the entrenched dominance of China and Germany. Taiwan, despite its relatively small size, features strongly due to its outsized role in semiconductor fabrication—a sector whose strategic importance has become increasingly evident post-pandemic.
 
-An important dynamic observable across the panel is the "stickiness" of production pivotalness. Despite rising wages in China and efforts to reconfigure supply chains, inertia, industrial clustering, and cumulative investment advantages have entrenched China’s centrality. Temporary shocks, such as factory shutdowns in Vietnam during 2021, reveal how even secondary hubs have become essential to global stability. Nevertheless, meaningful reconfiguration is underway, with gradual shifts toward regional diversification. Yet in the medium term, global intermediate manufacturing pivotalness remains highly concentrated in a few economies, and remains difficult to rapidly substitute.
+An important dynamic observable across the panel is the "stickiness" of production pivotalness. Despite rising wages in China and efforts to reconfigure supply chains, inertia, industrial clustering, and cumulative investment advantages have entrenched China’s centrality. Temporary shocks, such as factory shutdowns in Vietnam during 2021, reveal how even secondary hubs have become essential to global stability. Nevertheless, meaningful reconfiguration is underway, with gradual shifts toward regional diversification. Yet, in the medium term, global intermediate manufacturing's pivotalness remains highly concentrated in a few economies and is difficult to substitute rapidly.
 
 \subsection{Consumption (Final Demand)}
 
@@ -289,8 +291,8 @@ For geographic pivotalness, I compile data from three complementary sources: the
 
 	{\footnotesize Source: Author's calculations based on data from UNCTAD LSCI, World Bank LPI, and World Population Review.}
 \end{figure}
-
-The data reveals the exceptional and consistent dominance of China in global geographic pivotalness. Across all surveyed years from 2006 to 2023, China maintains a perfect index value of 100, underscoring its irreplaceable role in global trade infrastructure, both maritime and overland. This durability reflects not only China’s manufacturing centrality but also its sustained investments in port expansions, airport hubs, and cross-border logistics corridors such as the Belt and Road Initiative. Other Asian economies—most notably South Korea and Singapore—rank immediately behind China, although both have experienced gradual erosion in relative pivotalness over time. Singapore’s decline from 74.7 to 56.7 reflects both the rise of regional competitors and the physical constraints faced by a city-state. Nevertheless, it remains a critical maritime and air transshipment point, a role shared by Malaysia, which notably punches above its economic weight from a GDP share perspective.
+ 
+The data reveals the exceptional and consistent dominance of China in global geographic pivotalness. Across all surveyed years from 2006 to 2023, China maintains a perfect index value of 100, underscoring its irreplaceable role in global trade infrastructure, both maritime and overland. This durability reflects not only China’s manufacturing centrality but also its sustained investments in port expansions, airport hubs, and cross-border logistics corridors such as the Belt and Road Initiative. Other Asian economies—most notably South Korea and Singapore—rank immediately behind China, although both have experienced gradual erosion in relative pivotalness over time. Singapore’s decline from 74.7 to 56.7 reflects both the rise of regional competitors and the physical constraints faced by a city-state. Nevertheless, it remains a critical maritime and air transhipment point, a role shared by Malaysia, which notably punches above its economic weight from a GDP share perspective.
 
 The United States, while maintaining a high early position, exhibits a steady downward trajectory, dropping from 76.7 in 2006 to 54.9 by 2023. This trend mirrors broader shifts in global trade gravity towards Asia. Although the US continues to command vast air and land connectivity, it faces increasing competition from emerging Asian hubs and a declining share of global maritime traffic. Europe’s traditional powers—Germany, Belgium, France, and the Netherlands—also display slow but persistent decline. While these countries remain vital regional logistics nodes, their global centrality has diminished, a trend amplified by infrastructure limitations and the consolidation of trade flows through larger, newer mega-hubs elsewhere.
 
@@ -303,7 +305,7 @@ Overall, the findings portray a geographic landscape undergoing a slow but unden
 
 For digital pivotalness, I use data from the Data Center Map \citep{datacentermap2023} and Submarine Cable Map \citep{submarinecablemap2023}, which are comprehensive sources of data on global data centres and submarine cable infrastructure, respectively. These two components jointly capture the physical infrastructure that underpins the global internet and data economy. Submarine cables are the backbone of international connectivity, carrying over 95\% of intercontinental internet traffic \citep{noaa2024}, while data centres function as the primary nodes for storing, processing, and routing digital information.
 
-To construct a digital pivotalness index, I compile the total number of active submarine cable landings and commercial data centres for each country as of 2023. Due to the prohibitive cost of acquiring full time series data, I am only able to produce a snapshot for 2023. Each metric is normalised relative to the maximum observed value across all countries, yielding two sub-indices ranging from 0 to 100. I then compute the unweighted average of these two sub-indices to form the overall digital pivotalness score. This  offers a clear, interpretable measure of a country’s structural importance to the digital layer of global supply chains. Figure \ref{fig:pivotal_digital} presents a summary of the results, for the top 20 countries only:
+To construct a digital pivotalness index, I compile the total number of active submarine cable landings and commercial data centres for each country as of 2023. Due to the prohibitive cost of acquiring full timeseries data, I am only able to produce a snapshot for 2023. Each metric is normalised relative to the maximum observed value across all countries, yielding two sub-indices ranging from 0 to 100. I then compute the unweighted average of these two sub-indices to form the overall digital pivotalness score. This offers a clear, interpretable measure of a country’s structural importance to the digital layer of global supply chains. Figure \ref{fig:pivotal_digital} presents a summary of the results, for the top 20 countries only:
 
 \begin{figure}[H]
 	\caption{Digital Pivotalness: 2023}
@@ -343,8 +345,24 @@ Germany and Japan emerge as the second and third-most pivotal countries over the
 At the lower end of the scale, several emerging economies, including China, have risen from near-zero levels in the 1990s to more measurable levels in recent years. China’s relative index value reached 7.9 in 2022, reflecting the gradual internationalisation of the renminbi and its increased participation in cross-border financial flows. Nonetheless, its long-run average (2.2) remains modest, reinforcing the notion that currency convertibility and institutional openness remain barriers to financial centrality. It should be noted that the decline of the ‘Rest of World’ category from 23.5 in 1995 to just 2.6 in 2022 is primarily due to the creation of the Euro in 1999. Nevertheless, this further highlights the concentration of financial pivotalness in a shrinking set of core jurisdictions. Overall, this sub-index paints a picture of a highly asymmetric financial system, where a small number of countries play an outsized role in enabling global trade, investment, and liquidity flows.
 
 \subsection{Overall Index: Principal Component Analysis}
+To construct an overall measure of each country’s pivotalness, I apply Principal Component Analysis (PCA) to the six sub-indices developed in this paper: raw materials, production, demand, geographic, digital, and financial pivotalness. PCA is a dimensionality reduction technique that extracts the main axis of variation across correlated input variables, allowing us to summarise country-level pivotalness into a single index while retaining the underlying structure of the data.
+
+Mathematically, given a data matrix $X$ of centred and standardised values across $n$ countries and $p = 6$ dimensions, PCA solves the eigenvalue decomposition of the covariance matrix:
+
+\begin{equation}
+\Sigma = \frac{1}{n-1} X^\top X = Q \Lambda Q^\top
+\end{equation}
+
+where $Q$ is the matrix of eigenvectors and $\Lambda$ is the diagonal matrix of eigenvalues. The first principal component, $PC_1 = X q_1$, where $q_1$ is the eigenvector associated with the largest eigenvalue $\lambda_1$, captures the direction of maximum variance across countries’ pivotalness profiles. In this analysis, the first principal component accounts for the largest share of explained variance and is used to construct the composite pivotalness index. Scores are normalised to a 0–100 scale by rescaling each year’s maximum to 100, ensuring consistency across time. This composite index enables a more holistic ranking of countries based on their overall importance to global supply chains, accounting for both tangible and intangible chokepoints. 
+
+I have made the full overall index and subcomponents -- as well as all code used for data cleaning, processing, and analysis -- available on \href{https://github.com/Wendyyu-08/EPQ}{GitHub}.
 
 \subsection{Potential for Forecasting}
+
+The availability of annual data from 1995 onward enables preliminary exploration of how pivotalness evolves over time — and whether future trajectories can be predicted using historical patterns. To assess this, I conducted an experiment using the XGBoost machine learning algorithm, training a model to predict China’s raw materials pivotalness using data from 1995 to 2015. The model incorporates lagged sub-index values and trend features as predictors. When tested against the true values from 2016 to 2020, the model’s forecasts remained within a 5\% margin of error, accurately capturing both the direction and scale of China's pivotalness trajectory.
+
+While this remains a preliminary exploration, the ability to forecast future pivotalness carries strong policy implications. Governments and multinational firms could anticipate strategic dependencies and adjust investment, sourcing, or diplomacy accordingly. Machine learning models such as XGBoost, LSTM neural networks, or temporal attention architectures could be further refined to project pivotalness trends under different global scenarios, including decoupling, regionalisation, or technological disruption.
+
 
 \section{Discussion} 
 \label{sec:evaluation}
@@ -366,12 +384,12 @@ For \textbf{financial pivotalness}, BIS FX turnover data includes more than trad
 \section{Conclusion}
 \label{sec:conclusion}
 
-By quantifying pivotalness empirically, my paper moves beyond qualitative assessments and provides a structured framework for identifying strategic vulnerabilities. Policymakers, businesses, and researchers can use these insights to better anticipate which disruptions will propagate most severely, and structure risk mitigation strategies accordingly. It goes without saying that the depth of theory and empirics employed in my paper could be reconsidered by more senior researchers seeking to expand the concept and improve upon its implementation. Nevertheless, the results presented across the six types of pivotalness illustrate that a coherent empirical approach can uncover the vulnerabilities that are ever-present in our globalised system of supply. 
+By quantifying pivotalness empirically, my paper moves beyond qualitative assessments and provides a structured framework for identifying strategic vulnerabilities. Policymakers, firms, and researchers can use these insights to better anticipate which disruptions will propagate most severely, and structure risk mitigation strategies accordingly. It goes without saying that the depth of theory and empirics employed in my paper could be reconsidered by more senior researchers seeking to expand the concept and improve upon its implementation. Nevertheless, the results presented across the six types of pivotalness illustrate that a coherent empirical approach can uncover the vulnerabilities that are ever-present in our globalised system of supply. 
 
-Finally, I believe that an empirical approach to pivotalness is only useful to the extent that it captures as much of the truth about global supply chains as possible. Accordingly, a good Pivotalness Index cannot just update its data - the underlying theoretical framework must evolve with supply chain developments to remain relevant. Future work in this area might, for example, contain measures capturing pivotalness in artificial intelligence or decentralised finance, two nascent but increasingly important domains. It is only through such continuous development that a Pivotalness Index can maintain its strategic value to stakeholders.
-
+Finally, I believe that an empirical approach to pivotalness is only useful to the extent that it captures as much of the truth about global supply chains as possible. Accordingly, a good Pivotalness Index cannot just update its data — the underlying theoretical framework must evolve with supply chain developments to remain relevant. Future work in this area might, for example, contain measures capturing pivotalness in artificial intelligence or decentralised finance, two nascent but increasingly important domains. It is only through such continuous development that a Pivotalness Index can maintain its strategic value to stakeholders.
 
 \newpage
+
 \raggedright
 % this section generates your bibliography
 % \setcitestyle{numbers}
@@ -380,5 +398,11 @@ Finally, I believe that an empirical approach to pivotalness is only useful to t
 \renewcommand\bf{}
 \renewcommand\em{}
 \bibliography{mybib}
+
+\newpage
+
+\section*{Code and Data Availability}
+
+All analysis presented in this EPQ is replicable using code I made available via GitHub.\footnote{https://github.com/Wendyyu-08/EPQ} I have made all the underlying data available via a public AWS bucket; you do not need to download the date, as the code runs by pulling directly from the cloud data source.
 
 \end{document}

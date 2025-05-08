@@ -1,5 +1,5 @@
 # Local working files
-data*
+data/*
 *.ipynb
 *.ipynb_checkpoints
 *sdmx*
@@ -17,6 +17,7 @@ data*
 *.bcf
 *.run.xml
 *.vscode
+*snapshot-eps-converted-to.pdf
 
 
 
