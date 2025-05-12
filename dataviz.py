@@ -350,7 +350,6 @@ def pivotal_pca_map():
         plt.cm.ScalarMappable(
             cmap=cmap, norm=plt.Normalize(vmin=vmin, vmax=vmax)
         ), cax=cbar_ax, orientation="horizontal")
-    plt.suptitle(f'Overall Pivotal Index (latest data)') ;
 
     plt.savefig('typeset/dataviz/results_pivotal_pca_map.eps', format='eps', bbox_inches='tight')
     plt.close()
