@@ -248,3 +248,8 @@ Western Sahara,EH,ESH,732,ISO 3166-2:EH,Africa,Northern Africa,"",002,015,""
 Yemen,YE,YEM,887,ISO 3166-2:YE,Asia,Western Asia,"",142,145,""
 Zambia,ZM,ZMB,894,ISO 3166-2:ZM,Africa,Sub-Saharan Africa,Eastern Africa,002,202,014
 Zimbabwe,ZW,ZWE,716,ISO 3166-2:ZW,Africa,Sub-Saharan Africa,Eastern Africa,002,202,014
+Soviet Union,S1,S19,000,ISO 3166-2:S19,Europe,Eastern Europe,"",150,151,""
+Prussia,PU,PUS,000,ISO 3166-2:PUS,Europe,Western Europe,"",150,155,""
+Netherlands Antilles,AN,ANT,000,ISO 3166-2:ANT,Americas,Latin America and the Caribbean,Caribbean,019,419,029
+Serbia and Montenegro,SC,SCG,000,ISO 3166-2:SCG,Europe,Southern Europe,"",150,039,""
+South Africa (pre-1994),Z1,ZA1,000,ISO 3166-2:ZA1,Africa,Sub-Saharan Africa,Southern Africa,002,202,018
