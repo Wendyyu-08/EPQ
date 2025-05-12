@@ -1,4 +1,5 @@
 import pandas as pd
+import geopandas as gpd
 import numpy as np
 from datetime import datetime
 from matplotlib import pyplot as plt
@@ -323,6 +324,38 @@ def pivotal_pca_barchart():
     plt.close()
 
 
+def pivotal_pca_map():
+    df = pd.read_parquet('output/pivotal_index.parquet',columns=['country','pivotal_pca'])
+    v = 'pivotal_pca'
+    geo = gpd.read_file('dep/world.geojson').to_crs('ESRI:54030')
+    geo = pd.merge(geo,df,left_on='id',right_on='country',how='left')
+    geo[v] = geo[v].fillna(0)
+                
+    plt.rcParams.update({'font.size': 11,
+                        'font.family': 'sans-serif',
+                        'grid.linestyle': 'dotted',
+                        'figure.figsize': [8,4],
+                        'figure.constrained_layout.use': True,
+                        'figure.autolayout': False})
+    fig, ax = plt.subplots()
+    ax.axis('off')
+
+    cmap = 'viridis'
+    vmin, vmax = geo[v].min()+10, geo[v].max()  # colours relative to specific range being plotted
+
+    geo.plot(column=v, cmap=cmap, vmin=vmin, vmax=vmax, linewidth=0.07, edgecolor='black', ax=ax)
+    geo.plot(edgecolor='black', linewidth=0.07, facecolor='none', ax=ax)
+    cbar_ax = fig.add_axes([0.1, 0.00, 0.8, 0.01])
+    cbar = fig.colorbar(
+        plt.cm.ScalarMappable(
+            cmap=cmap, norm=plt.Normalize(vmin=vmin, vmax=vmax)
+        ), cax=cbar_ax, orientation="horizontal")
+    plt.suptitle(f'Overall Pivotal Index (latest data)') ;
+
+    plt.savefig('typeset/dataviz/results_pivotal_pca_map.eps', format='eps', bbox_inches='tight')
+    plt.close()
+
+
 if __name__ == '__main__':
     print('')
     pivotal1_heatmap()
@@ -332,4 +365,5 @@ if __name__ == '__main__':
     pivotal5_barchart()
     pivotal6_heatmap()
     pivotal_pca_barchart()
+    pivotal_pca_map()
     print('')
